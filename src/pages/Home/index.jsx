@@ -16,9 +16,18 @@ export default function Home() {
 
   useEffect( () => {
     console.log('useEffect acionado')
-    fetch('https://api.github.com/users/GabrielManicucci')
-    .then( response => response.json() )
-    .then( data => setUSer(data) )
+
+    async function fecthData() {
+      const response = await fetch('https://api.github.com/users/GabrielManicucci')
+      const data = await response.json()
+      setUSer({name: data.name, avatar: data.avatar_url})
+    }
+
+    fecthData()
+
+    // fetch('https://api.github.com/users/GabrielManicucci')
+    // .then( response => response.json() )
+    // .then( data => setUSer({name: data.name, avatar: data.avatar_url}) )
   }, []);
 
   
@@ -47,7 +56,7 @@ export default function Home() {
 
         <div>
           <strong> {user.name} </strong>
-          <img src={user.avatar_url} alt="foto de perfil" />
+          <img src={user.avatar} alt="foto de perfil" />
         </div>
       </header>
       
