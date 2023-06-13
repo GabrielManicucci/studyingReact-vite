@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Card from "../../components/Card"
 import "./styles.css"
 
@@ -7,10 +7,21 @@ import "./styles.css"
 
 
 export default function Home() {
+  const [user, setUSer] = useState( {user: '', img: ''} )
+
   const [studentName, setStudentName] = useState('')
 
   const [students, setStudents] = useState([])
 
+
+  useEffect( () => {
+    console.log('useEffect acionado')
+    fetch('https://api.github.com/users/GabrielManicucci')
+    .then( response => response.json() )
+    .then( data => setUSer(data) )
+  }, []);
+
+  
   function addStudent() {
     const newStudent = {
       name: studentName,
@@ -28,16 +39,18 @@ export default function Home() {
     setStudents( (prevState) => [...prevState, newStudent] )
   }
 
-  // let inputValue = 'Gabriel'
-  // function showInput(data) {
-  //   console.log(data)
-  //   inputValue = data
-    
-  // }
-
+ 
   return (
     <div className="home" >
-      <h1>Lista de Presença: {studentName} </h1>
+      <header>
+        <h1>Lista de Presença {studentName} </h1>
+
+        <div>
+          <strong> {user.name} </strong>
+          <img src={user.avatar_url} alt="foto de perfil" />
+        </div>
+      </header>
+      
       <input 
       type="text" 
       name="text" 
@@ -46,8 +59,6 @@ export default function Home() {
       onChange={ e => setStudentName(e.target.value)}
       />
       <button type="button" onClick={addStudent} >Adicionar</button>
-
-      {/* {console.log(students)} */}
 
       {
         students.map( (student) => {
