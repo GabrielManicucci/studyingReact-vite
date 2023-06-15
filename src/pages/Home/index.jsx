@@ -48,11 +48,17 @@ export default function Home() {
     setStudents( (prevState) => [...prevState, newStudent] )
   }
 
+  // let title = 'aluno'
+
+  // function handleStudentName(name) {
+  //   title = name
+  //   console.log(title)
+  // }
  
   return (
     <div className="home" >
       <header>
-        <h1>Lista de Presença {studentName} </h1>
+        <h1>Lista de Presença: {studentName} </h1>
 
         <div>
           <strong> {user.name} </strong>
